@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.Domain.Entities
+namespace ApiGastosResidenciais.Domain.Entities
 {
     public abstract class BaseEntity
     {
@@ -21,4 +21,6 @@ namespace Api.Domain.Entities
             DeletedAt = DateTime.UtcNow;
         }
     }
+
+    // escolhi utilizar a  entidade base  para centralizar propriedades comuns as entidades, facilitando a manutenção e evitando repetição de código.
 }

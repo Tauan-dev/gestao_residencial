@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Domain.Enums;
+using ApiGastosResidenciais.Domain.Enums;
+using ApiGastosResidenciais.Domain.Validation;
 
-namespace Api.Domain.Entities
+namespace ApiGastosResidenciais.Domain.Entities
 {
     public class Transaction : BaseEntity
     {
@@ -24,7 +25,13 @@ namespace Api.Domain.Entities
         public void ValidateDomain(string description, int value, TransactionType type, int personId, int categoryId)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(description), "Descrição é obrigatoria");
-            DomainExceptionValidation.When(value < 0, "Valor não pode ser negativo");
+            DomainExceptionValidation.When(value <= 0, "Valor da transação deve ser positivo");
+
+            if (Person.IsMinor() && type == TransactionType.Receita)
+            {
+                DomainExceptionValidation.When(true, "Menores de idade não podem ter transações do tipo receita");
+            }
+
             Description = description;
             Value = value;
             Type = type;
@@ -32,9 +39,9 @@ namespace Api.Domain.Entities
             CategoryId = categoryId;
         }
 
-        // public void Update()
-        // {
-        //     ValidateDomain(Description, Value, Type, PersonId, CategoryId);
-        // }
+        public void Update()
+        {
+            ValidateDomain(Description, Value, Type, PersonId, CategoryId);
+        }
     }
 }

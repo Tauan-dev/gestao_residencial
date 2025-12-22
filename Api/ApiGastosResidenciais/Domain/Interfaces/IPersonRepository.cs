@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiGastosResidenciais.Domain.Entities;
 
-namespace Api.Domain.Interfaces
+namespace ApiGastosResidenciais.Domain.Interfaces
 {
     public interface IPersonRepository
     {

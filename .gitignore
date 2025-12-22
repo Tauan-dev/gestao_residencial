@@ -1,0 +1,48 @@
+[Bb]in/
+[Oo]bj/
+
+
+# Arquivos de configuração do ambiente de desenvolvimento
+.vs/
+.vscode/
+.idea/
+
+# Arquivos de usuário e caches
+*.user
+*.suo
+*.userosscache
+*.cache
+*.log
+
+# Arquivos de compilação intermediários
+*.ilk
+*.meta
+*.obj
+*.pdb
+*.ipch
+*.tlog
+
+# NuGet
+packages/
+*.nupkg
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+
+# Visual Studio Code workspace
+*.code-workspace
+
+# Arquivos sensíveis/locais
+appsettings.Development.json
+
+# Banco local / arquivos de dados temporários
+*.db
+*.sqlite
+
+# node/npm 
+node_modules/
+
+# Arquivos temporários
+*.tmp
+*.temp

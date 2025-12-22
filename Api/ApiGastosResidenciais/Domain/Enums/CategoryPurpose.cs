@@ -1,4 +1,4 @@
-namespace Api.Domain.Enums
+namespace ApiGastosResidenciais.Domain.Enums
 {
     public enum CategoryPurpose
     {

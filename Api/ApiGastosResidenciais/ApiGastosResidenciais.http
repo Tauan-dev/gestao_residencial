@@ -1,0 +1,6 @@
+@ApiGastosResidenciais_HostAddress = http://localhost:5233
+
+GET {{ApiGastosResidenciais_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
