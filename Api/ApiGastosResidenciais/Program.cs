@@ -1,5 +1,7 @@
+using ApiGastosResidenciais.Application.Common;
 using ApiGastosResidenciais.Infra.Context;
 using Microsoft.EntityFrameworkCore;
+using ApiGastosResidenciais.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ICalculationService, CalculationService>();
 
 
 
