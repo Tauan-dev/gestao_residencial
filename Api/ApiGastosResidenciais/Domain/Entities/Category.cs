@@ -9,7 +9,7 @@ namespace ApiGastosResidenciais.Domain.Entities
 {
     public class Category : BaseEntity
     {
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
         public CategoryPurpose Purpose { get; set; } // utilizar Enum para padronizar facilita muito a legibilidade do codigo, e evita problemas como erros ou inconsistencias de dados.
         public ICollection<Transaction> Transactions { get; private set; } = new List<Transaction>();
 

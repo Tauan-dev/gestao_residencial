@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using ApiGastosResidenciais.Application.DTOs.Validation;
+using static ApiGastosResidenciais.Application.DTOs.ValidationRules;
 
 namespace ApiGastosResidenciais.Application.DTOs.Person
 {
     public class UpdatePersonDto
     {
-        [Required(ErrorMessage = ValidationRules.RequiredError)]
-        [RegularExpression(ValidationRules.PersonNameRegex, ErrorMessage = ValidationRules.PersonNameError)]
+        [Required(ErrorMessage = RequiredError)]
+        [RegularExpression(PersonNameRegex, ErrorMessage = PersonNameError)]
         public string Name { get; set; } = string.Empty;
 
-        [Range(ValidationRules.MinAge, ValidationRules.MaxAge, ErrorMessage = ValidationRules.AgeError)]
+        [Range(MinAge, MaxAge, ErrorMessage = AgeError)]
         public int Age { get; set; }
     }
 }

@@ -9,20 +9,20 @@ namespace ApiGastosResidenciais.Domain.Entities
 {
     public class Transaction : BaseEntity
     {
-        public string Description { get; set; }
-        public int Value { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public decimal Value { get; set; }
         public TransactionType Type { get; set; }
         public int PersonId { get; set; }
-        public Person Person { get; set; }
+        public Person Person { get; set; } = null!;
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Category Category { get; set; } = null!;
 
-        public Transaction(string description, int value, TransactionType type, int personId, int categoryId)
+        public Transaction(string description, decimal value, TransactionType type, int personId, int categoryId)
         {
             ValidateDomain(description, value, type, personId, categoryId);
         }
 
-        public void ValidateDomain(string description, int value, TransactionType type, int personId, int categoryId)
+        public void ValidateDomain(string description, decimal value, TransactionType type, int personId, int categoryId)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(description), "Descrição é obrigatoria");
             DomainExceptionValidation.When(value <= 0, "Valor da transação deve ser positivo");
