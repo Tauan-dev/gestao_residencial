@@ -10,9 +10,26 @@ using System.Threading.RateLimiting;
 namespace ApiGastosResidenciais.Application.Common
 {
     public class CalculationService : ICalculationService
-    {   
+    {
         // Como os métodos criados são utilizados de forma 'padrão' entre o service de Pessoas e o de Categorias(mesmo que opcional), pra mim foi interessante criar um service genérico comum para ambos, respeitando o princípio do DRY (Don't Repeat Yourself). Minha intenção é poder fazer o sistema de forma que evite repetições descessárias.
-        public CalculatedResult Calculate(IEnumerable<CalculationInput> input)
+        public IEnumerable<OwnerTotals> CalculatePerOwner(IEnumerable<CalculationInput> input)
+        {
+            return input
+                .GroupBy(i => i.Id)
+                .Select(g =>
+            {
+                decimal totalIncome = g.Sum(i => i.FinanceIncome);
+                decimal totalOutcome = g.Sum(i => i.Expense);
+
+                return new OwnerTotals(
+                    Id: g.Key, 
+                    TotalIncome: totalIncome,
+                    TotalExpense: totalOutcome,
+                    Balance: totalIncome - totalOutcome);
+            });
+        }
+
+        public CalculatedResult CalculateTotal(IEnumerable<CalculationInput> input)
         {
             decimal totalIncome = input.Sum(i => i.FinanceIncome);
             decimal totalExpense = input.Sum(i => i.Expense);
@@ -20,7 +37,6 @@ namespace ApiGastosResidenciais.Application.Common
 
             return new CalculatedResult(totalIncome, totalExpense, balance);
         }
-
         public SpentResult[] Spent(IEnumerable<CalculationInput> input)
         {
 
@@ -62,5 +78,7 @@ namespace ApiGastosResidenciais.Application.Common
             (array[i + 1], array[rigth]) = (array[rigth], array[i + 1]);
             return i + 1;
         }
+
+
     }
 }

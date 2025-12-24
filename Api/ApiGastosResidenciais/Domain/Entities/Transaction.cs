@@ -39,9 +39,9 @@ namespace ApiGastosResidenciais.Domain.Entities
             CategoryId = categoryId;
         }
 
-        public void Update()
+        public void Update(string description, decimal value, TransactionType type, int personId, int categoryId)
         {
-            ValidateDomain(Description, Value, Type, PersonId, CategoryId);
+            ValidateDomain(description, value, type, personId, categoryId);
         }
     }
 }

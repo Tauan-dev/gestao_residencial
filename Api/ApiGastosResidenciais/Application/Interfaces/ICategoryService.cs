@@ -11,6 +11,8 @@ namespace ApiGastosResidenciais.Application.Interfaces
         Task CreateAsync(CreateCategoryDto categoryDto);
         Task UpdateAsync(int id, UpdateCategoryDto categoryDto);
         Task DeleteAsync(int id);
+        Task<(IEnumerable<CategoryTotalsDto> categories, CalculatedResult Total)> GetTotalsByCategoryAsync();
+        Task<SpentResult[]> GetSpentAsync();
         Task<CategoryDto> GetByIdAsync(int id);
         Task<IEnumerable<CategoryDto>> GetAllAsync();
     }

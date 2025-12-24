@@ -26,7 +26,10 @@ namespace ApiGastosResidenciais.Infra.Repositories
 
         public async Task<Person> GetByIdAsync(int id)
         {
-            return await _context.Persons.FindAsync(id);
+            var person = await _context.Persons.FindAsync(id);
+            if (person == null)
+                throw new InvalidOperationException($"Pessoa com {id} não foi encontrado.");
+            return person;
         }
 
         public async Task<IEnumerable<Person>> GetAllAsync()
