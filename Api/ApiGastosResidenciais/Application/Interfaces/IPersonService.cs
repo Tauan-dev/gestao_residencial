@@ -12,7 +12,7 @@ namespace ApiGastosResidenciais.Application.Interfaces
         Task UpdateAsync(int id, UpdatePersonDto personDto);
         Task DeleteAsync(int id);
         Task<(IEnumerable<PersonTotalsDto> Itens, CalculatedResult Total)> GetTotalsByPersonAsync();
-        Task<SpentResult[]> GetSpentAsync();
+        Task<PersonSpenDto[]> GetSpentAsync();
         Task<PersonDto> GetByIdAsync(int id);
         Task<IEnumerable<PersonDto>> GetAllAsync();
     }

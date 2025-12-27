@@ -165,12 +165,24 @@ namespace ApiGastosResidenciais.WebApi.Controllers
 
             try
             {
-                var (items, total) = await _personService.GetTotalsByPersonAsync();
+                var (itens, total) = await _personService.GetTotalsByPersonAsync();
 
                 var response = new
                 {
-                    people = items,
-                    total
+                    people = itens.Select(p => new
+                    {
+                        personId = p.PersonId,
+                        name = p.Name,
+                        totalIncome = p.TotalIncome,
+                        totalExpense = p.TotalExpense,
+                        balance = p.Balance
+                    }),
+                    total = new
+                    {
+                        totalIncome = total.TotalIncome,
+                        totalExpense = total.TotalExpense,
+                        balance = total.Balance
+                    }
                 };
 
                 return Ok(response);
@@ -181,6 +193,7 @@ namespace ApiGastosResidenciais.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao obter totais por pessoa");
             }
         }
+
 
 
         [HttpGet("spent")]

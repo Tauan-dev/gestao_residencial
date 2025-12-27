@@ -7,6 +7,7 @@ using ApiGastosResidenciais.Domain.Interfaces;
 using ApiGastosResidenciais.Infra.Repositories;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,20 +27,31 @@ builder.Services.AddSwaggerGen();
 var mapperConfig = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile<DomainToDtoMappingProfile>();
-    
+
 });
 
-var corsPolicy = "_frontendPolicy";
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter());
+    });
+
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(corsPolicy, policy =>
-    {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
 });
+
+builder.Services.AddControllers();
 
 
 IMapper mapper = mapperConfig.CreateMapper();
@@ -66,10 +78,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowFrontend");
+
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors(corsPolicy);
 
 app.Run();

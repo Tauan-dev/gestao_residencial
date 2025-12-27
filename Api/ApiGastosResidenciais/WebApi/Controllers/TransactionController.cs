@@ -25,7 +25,7 @@ namespace ApiGastosResidenciais.WebApi.Controllers
             _logger = logger;
         }
 
-      
+
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<TransactionDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<TransactionDto>>> GetAll()
@@ -51,7 +51,7 @@ namespace ApiGastosResidenciais.WebApi.Controllers
             }
         }
 
-        
+
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(TransactionDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -76,7 +76,7 @@ namespace ApiGastosResidenciais.WebApi.Controllers
             }
         }
 
-     
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -97,22 +97,22 @@ namespace ApiGastosResidenciais.WebApi.Controllers
             }
             catch (KeyNotFoundException ex)
             {
-                _logger.LogWarning(ex, "Erro de entidade relacionada ao criar transação");
+                _logger.LogWarning(ex, "Tipo não encontrado");
                 return NotFound(ex.Message);
             }
             catch (InvalidOperationException ex)
             {
-                _logger.LogWarning(ex, "Regra de negócio violada ao criar transação");
+                _logger.LogWarning(ex, "Menores de idade não podem inserir receita");
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao criar transação");
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao criar transação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro no servidor");
             }
         }
 
-        
+
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -138,17 +138,17 @@ namespace ApiGastosResidenciais.WebApi.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                _logger.LogWarning(ex, "Regra de negócio violada ao atualizar transação {Id}", id);
+                _logger.LogWarning(ex, "Menores de idade não podem inserir receita ao atualizar transação {Id}", id);
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao atualizar transação {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao atualizar transação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro de servidor");
             }
         }
 
-        
+
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

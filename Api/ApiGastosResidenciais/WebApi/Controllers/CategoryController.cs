@@ -95,6 +95,11 @@ namespace ApiGastosResidenciais.WebApi.Controllers
                 await _categoryService.CreateAsync(dto);
                 return StatusCode(StatusCodes.Status201Created);
             }
+            catch(ApplicationException ex)
+            {
+                _logger.LogWarning(ex, "Erro ao criar categoria");
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao criar categoria");

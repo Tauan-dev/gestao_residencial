@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace ApiGastosResidenciais.Application.DTOs.Person
 {
-    public class PersonTotalsDto
+    public class PersonSpenDto
     {
         public int PersonId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public decimal TotalIncome { get; set; }
-        public decimal TotalExpense { get; set; }
-        public decimal Balance => TotalIncome - TotalExpense;
+        public decimal Expense { get; set; }
     }
 }

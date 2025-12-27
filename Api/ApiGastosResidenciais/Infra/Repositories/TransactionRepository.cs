@@ -26,12 +26,20 @@ namespace ApiGastosResidenciais.Infra.Repositories
 
         public async Task<Transaction> GetByIdAsync(int id)
         {
-            return await _context.Transactions.FindAsync(id);
+            var transaction = await _context.Transactions.FindAsync(id);
+            if (transaction == null)
+            {
+                throw new InvalidOperationException($"Transação com id {id} não encontrada.");
+            }
+            return transaction;
         }
 
         public async Task<IEnumerable<Transaction>> GetAllAsync()
         {
-            return await _context.Transactions.ToListAsync();
+            return await _context.Transactions
+                .Include(t => t.Person)
+                .Include(t => t.Category)
+                .ToListAsync();
         }
 
         public async Task UpdateAsync(Transaction transaction)

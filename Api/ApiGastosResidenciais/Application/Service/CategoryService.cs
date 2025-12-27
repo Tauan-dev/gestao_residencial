@@ -59,8 +59,9 @@ namespace ApiGastosResidenciais.Application.Service
         }
 
 
-        public async Task<SpentResult[]> GetSpentAsync()
+        public async Task<CategorySpenDto[]> GetSpentAsync()
         {
+            var categories = await _categories.GetAllAsync();
             var transactions = await _transactions.GetAllAsync();
 
             var inputs = transactions.Select(t => new CalculationInput(
@@ -69,7 +70,18 @@ namespace ApiGastosResidenciais.Application.Service
                 Expense: t.Type == TransactionType.Despesa ? t.Value : 0m));
 
             var spent = _calculation.Spent(inputs);
-            return spent;
+            var result =
+            (
+                from s in spent
+                join c in categories on s.Id equals c.Id
+                select new CategorySpenDto(
+                    CategoryId: c.Id,
+                    Description: c.Description,
+                    Expense: s.Expense
+                ))
+                .ToArray();
+
+            return result;
         }
 
         public async Task<(IEnumerable<CategoryTotalsDto> categories, CalculatedResult Total)> GetTotalsByCategoryAsync()
@@ -77,10 +89,25 @@ namespace ApiGastosResidenciais.Application.Service
             var categoriesList = await _categories.GetAllAsync();
             var transactions = await _transactions.GetAllAsync();
 
-            var inputs = transactions.Select(t => new CalculationInput(
-                Id: t.CategoryId,
-                FinanceIncome: t.Type == TransactionType.Receita ? t.Value : 0m,
-                Expense: t.Type == TransactionType.Despesa ? t.Value : 0m));
+            var joined =
+                from t in transactions
+                join c in categoriesList on t.CategoryId equals c.Id
+                select new { t, c.Purpose };
+
+            var inputs = joined.Select(j =>
+                new CalculationInput(
+                    Id: j.t.CategoryId,
+                    FinanceIncome:
+                        (j.Purpose == CategoryPurpose.Receita || j.Purpose == CategoryPurpose.Ambas) &&
+                        j.t.Type == TransactionType.Receita
+                            ? j.t.Value
+                            : 0m,
+                    Expense:
+                        (j.Purpose == CategoryPurpose.Despesa || j.Purpose == CategoryPurpose.Ambas) &&
+                        j.t.Type == TransactionType.Despesa
+                            ? j.t.Value
+                            : 0m
+                ));
 
             var perOwner = _calculation.CalculatePerOwner(inputs).ToList();
             var total = _calculation.CalculateTotal(inputs);
@@ -98,6 +125,7 @@ namespace ApiGastosResidenciais.Application.Service
 
             return (items.ToList(), total);
         }
+
 
         public async Task UpdateAsync(int id, UpdateCategoryDto categoryDto)
         {

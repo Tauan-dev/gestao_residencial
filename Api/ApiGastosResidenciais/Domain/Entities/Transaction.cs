@@ -27,10 +27,6 @@ namespace ApiGastosResidenciais.Domain.Entities
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(description), "Descrição é obrigatoria");
             DomainExceptionValidation.When(value <= 0, "Valor da transação deve ser positivo");
 
-            if (Person.IsMinor() && type == TransactionType.Receita)
-            {
-                DomainExceptionValidation.When(true, "Menores de idade não podem ter transações do tipo receita");
-            }
 
             Description = description;
             Value = value;

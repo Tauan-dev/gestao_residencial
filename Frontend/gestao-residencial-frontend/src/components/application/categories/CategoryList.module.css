@@ -1,0 +1,118 @@
+.container {
+  padding: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.empty {
+  margin-top: 8px;
+  color: #718096;
+  font-size: 14px;
+}
+
+.error {
+  margin-top: 8px;
+  color: #e53e3e;
+}
+
+
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #1a202c;
+}
+
+.receitaBadge {
+  background: #c6f6d5;
+}
+
+.despesaBadge {
+  background: #fed7d7;
+}
+
+.ambasBadge {
+  background: #e9d8fd;
+}
+
+
+.badgesContainer {
+  display: flex;
+  gap: 12px;
+  margin: 8px 0 12px;
+  flex-wrap: wrap;
+}
+
+.spentBadge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.spentBadgeMax {
+  background-color: #e53e3e; /* vermelho */
+}
+
+.spentBadgeMin {
+  background-color: #38a169; /* verde */
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.editInput,
+.editSelect {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+.editButton,
+.deleteButton,
+.saveButton,
+.cancelButton,
+.refreshButton {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.editButton {
+  background: #edf2f7;
+}
+
+.deleteButton {
+  background: #fed7d7;
+}
+
+.saveButton {
+  background: #c6f6d5;
+}
+
+.cancelButton {
+  background: #e2e8f0;
+}
+
+.refreshButton {
+  margin-top: 12px;
+  background: #3182ce;
+  color: white;
+}

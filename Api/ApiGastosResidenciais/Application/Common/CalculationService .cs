@@ -22,7 +22,7 @@ namespace ApiGastosResidenciais.Application.Common
                 decimal totalOutcome = g.Sum(i => i.Expense);
 
                 return new OwnerTotals(
-                    Id: g.Key, 
+                    Id: g.Key,
                     TotalIncome: totalIncome,
                     TotalExpense: totalOutcome,
                     Balance: totalIncome - totalOutcome);
@@ -39,8 +39,19 @@ namespace ApiGastosResidenciais.Application.Common
         }
         public SpentResult[] Spent(IEnumerable<CalculationInput> input)
         {
-
-            var array = input.ToArray();
+            var perOwner = CalculatePerOwner(input).ToArray();
+            if (perOwner.Length == 0)
+            {
+                return Array.Empty<SpentResult>();
+            }
+            var array = perOwner
+                .Select(o => new CalculationInput(
+                    Id: o.Id,
+                    FinanceIncome: 0m,
+                    Expense: o.TotalExpense
+                ))
+                .ToArray();
+                
             QuickSort(array, 0, array.Length - 1);
 
             var min = array[0];

@@ -1,0 +1,64 @@
+.container {
+  margin-top: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.empty {
+  margin-top: 8px;
+  color: #718096;
+}
+
+.error {
+  margin-top: 8px;
+  color: #e53e3e;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.deleteButton {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  background: #fed7d7;
+  color: #742a2a;
+  cursor: pointer;
+}
+
+.badgesContainer {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.badgeDanger {
+  background-color: #dc3545; 
+}
+
+.badgeSuccess {
+  background-color: #198754; 
+}

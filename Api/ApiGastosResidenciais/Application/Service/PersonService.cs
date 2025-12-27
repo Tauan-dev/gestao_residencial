@@ -55,8 +55,9 @@ namespace ApiGastosResidenciais.Application.Service
 
 
 
-        public async Task<SpentResult[]> GetSpentAsync()
-        {
+        public async Task<PersonSpenDto[]> GetSpentAsync()
+        {   
+            var persons = await _persons.GetAllAsync();
             var transactions = await _transactions.GetAllAsync();
 
             var list = transactions.Select(t => new CalculationInput(
@@ -64,7 +65,17 @@ namespace ApiGastosResidenciais.Application.Service
                 FinanceIncome: t.Type == TransactionType.Receita ? t.Value : 0m,
                 Expense: t.Type == TransactionType.Despesa ? t.Value : 0m));
             var spent = _calculation.Spent(list);
-            return spent;
+
+            var result = 
+                from s in spent
+                join p in persons on s.Id equals p.Id
+                select new PersonSpenDto
+                {
+                    PersonId = p.Id,
+                    Name = p.Name,
+                    Expense = s.Expense
+                };
+            return result.ToArray();
         }
 
         public async Task<(IEnumerable<PersonTotalsDto> Itens, CalculatedResult Total)> GetTotalsByPersonAsync()
