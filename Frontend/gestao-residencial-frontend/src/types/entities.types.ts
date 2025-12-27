@@ -1,11 +1,11 @@
-// import type { Category } from "../../../types/category.types";
+
 
 export interface CategoryFormProps {
   initialData: Category | null;
   loading: boolean;
   onSubmit: (payload: Omit<Category, "id">, id?: number) => Promise<void>;
   onCancel: () => void;
-  // ...outras props...
+  
 }
 
 export interface Person {

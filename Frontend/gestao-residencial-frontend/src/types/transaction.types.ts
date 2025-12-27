@@ -3,12 +3,12 @@ export type TransactionType = "Despesa" | "Receita";
 export interface TransactionDto {
   id: number;
   description: string;
-  value: number; // Value no C#
-  type: TransactionType; // TransactionType enum
+  value: number; 
+  type: TransactionType; 
   personId: number;
   categoryId: number;
 
-  // opcionais, vindos de PersonDto / CategoryDto se a API mandar:
+  
   person?: {
     id: number;
     name: string;

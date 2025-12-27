@@ -4,12 +4,12 @@
   border-radius: 8px;
   background: #fff;
 }
-
 .formGroup {
   margin-bottom: 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  
 }
 
 .formGroup label {
